@@ -1,0 +1,89 @@
+<template>
+    <div class="slds-tabs_card">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-opportunity">
+                                 <lightning-icon icon-name="standard:recipe" alternative-text="recipe" title="recipe"></lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span>Google Search Address API in Apex Salesforce</span>
+                                        <span class="slds-page-header__title slds-truncate" title="Recently Viewed">TechDicer</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <br/>
+    <!-- Address Search Modal-->
+ 
+    <lightning-card  variant="Narrow"  title="Google Search Address" icon-name="standard:address">
+        <div class="slds-var-p-around_small">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="around-small" size="12" medium-device-size="12" large-device-size="12">
+                    <lightning-input type="search" variant="label-hidden" class="searchAddress" name="searchAddress"
+                        placeholder="Search Address.." onchange={handleChange} value={selectedAddress}>
+                    </lightning-input>
+                    <!-- Address Recommendations -->
+                    <div if:true={hasRecommendations}>
+                        <div class="address-recommendations" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid"
+                                role="presentation">
+                                <template for:each={addressRecommendations} for:item="addressRecommendation">
+                                    <li key={addressRecommendation} role="presentation"
+                                        onclick={handleAddressRecommendationSelect}
+                                        data-value={addressRecommendation.place_id} class="slds-listbox__item">
+                                        <span
+                                            class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                            role="option">
+                                            <span class="slds-media__body slds-m-left_xx-small slds-m-bottom_xx-small">
+                                                <div class="slds-grid slds-m-bottom_small">
+                                                    <div class="slds-col slds-size_1-of-10">
+                                                        <lightning-button-icon size="medium" icon-name="utility:checkin"
+                                                            class="slds-input__icon" variant="bare" onclick={resetAddress}>
+                                                        </lightning-button-icon>
+                                                    </div>
+                                                    <div class="slds-m-left_medium slds-col slds-size_8-of-10">
+                                                        <span
+                                                            class="slds-listbox__option-text slds-listbox__option-text_entity"><b>{addressRecommendation.main_text}</b></span>
+                                                        <span
+                                                            class="slds-listbox__option-text slds-listbox__option-text_entity slds-m-top_xxx-small">{addressRecommendation.secondary_text}</span>
+                                                    </div>
+                                                    <div class="slds-col slds-size_1-of-10"></div>
+                                                </div>
+                                            </span>
+                                        </span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            <!-- selected address info -->
+                <lightning-layout-item padding="around-small" size="12" medium-device-size="12" large-device-size="12">
+                    <lightning-input name="city" class="fieldvalidate" type="text"
+                                     label="City" value={city} >
+                    </lightning-input><br/>
+                    <lightning-input name="pincode" class="fieldvalidate" type="text"
+                                     label="ZipCode" value={pincode} >
+                    </lightning-input><br/>
+                    <lightning-input name="state" class="fieldvalidate" type="text"
+                                     label="State" value={state} >
+                    </lightning-input><br/>
+                    <lightning-input name="country" class="fieldvalidate" type="text"
+                                     label="Country" value={country} >
+                    </lightning-input><br/>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+  </lightning-card>
+</template>
